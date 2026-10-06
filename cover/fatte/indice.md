@@ -14,3 +14,4 @@ Lette da Claude prima di crearne una nuova: non ripetere stile, composizione e p
 | 2026-10-06 | Master_s_thesis_Data_science | [2026-10-06-Master_s_thesis_Data_science.svg](2026-10-06-Master_s_thesis_Data_science.svg) | Sfera 3D metà rossa e metà beige con ombreggiatura e grana leggera, cover a schermo intero senza scritte |
 | 2026-10-06 | Master_s_thesis_Data_science | [2026-10-06-Master_s_thesis_Data_science.svg](2026-10-06-Master_s_thesis_Data_science.svg) |  |
 | 2026-10-06 | Master_s_thesis_Data_science | [2026-10-06-Master_s_thesis_Data_science.svg](2026-10-06-Master_s_thesis_Data_science.svg) |  |
+| 2026-10-06 | Master_s_thesis_Data_science | [2026-10-06-Master_s_thesis_Data_science.svg](2026-10-06-Master_s_thesis_Data_science.svg) | Sfera 3D metà rossa e metà beige, versione verticale 1080x1350 per la card |
