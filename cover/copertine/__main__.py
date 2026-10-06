@@ -4,7 +4,7 @@
        python -m copertine sito -o <cartella-sito>         copia le cover in <sito>/img e scrive <sito>/progetti.json
        python -m copertine pubblica --progetto <repo> [--note ..] [--push]
                                                            registra + sito + commit nelle due repo (push solo con --push).
-                                                           SVG = ~/<repo>/docs/copertina.svg, sito = accanto a Elaborati_Repo,
+                                                           SVG = ~/<repo>/docs/copertina-verticale.svg (o copertina.svg), sito = accanto a Elaborati_Repo,
                                                            card da progetti.json (progetto nuovo: --titolo --desc --tag --live)"""
 import argparse
 import json
@@ -100,7 +100,8 @@ def sito(dest):
 def pubblica(a):
     """registra + sito + commit (e push con --push) in entrambe le repo: copertine (fatte/) e il sito."""
     dest = Path(a.output) if a.output else SITO
-    svg = Path(a.svg) if a.svg else Path.home() / a.progetto / "docs" / "copertina.svg"  # ponytail: repo dei progetti in ~/<nome>
+    docs = Path.home() / a.progetto / "docs"  # ponytail: repo dei progetti in ~/<nome>
+    svg = Path(a.svg) if a.svg else next((f for f in (docs / "copertina-verticale.svg", docs / "copertina.svg") if f.exists()), docs / "copertina-verticale.svg")
     if not svg.exists():
         sys.exit(f"SVG non trovato: {svg} (passa --svg)")
     vecchia = next((v for v in carica_progetti() if v["repo"] == a.progetto), {})
