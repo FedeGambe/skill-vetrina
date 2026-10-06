@@ -120,3 +120,7 @@ STILI = {f.__name__: f for f in (bersaglio, cerchio_diviso, diagonali, spirale, 
 from .stili_illustrati import NUOVI  # noqa: E402
 
 STILI.update({f.__name__: f for f in NUOVI})
+
+from .stili_tipografici import TIPOGRAFICI  # noqa: E402
+
+STILI.update({f.__name__: f for f in TIPOGRAFICI})

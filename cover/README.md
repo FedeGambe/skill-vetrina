@@ -2,8 +2,8 @@
 
 Copertine SVG in stile paperback vintage (palette piatte, forme geometriche, grana). Nessuna dipendenza.
 
-- **Stili** (17): geometrici (bersaglio, cerchio_diviso, diagonali, spirale, cornici, onde, moire), tipografici (tipo_gigante, glifo, lettere_ruotate, stecche), 3D (sfere, cubi_isometrici, orizzonte), illustrati (testa_labirinto, occhio, organico) in `copertine/stili.py` e `stili_illustrati.py`
-- **Palette**: retro, mattone, mostarda, notte, smeraldo, rosa, carbone, mare (`copertine/palette.py`)
+- **Stili** (26): geometrici (bersaglio, cerchio_diviso, diagonali, spirale, cornici, onde, moire), tipografici (tipo_gigante, glifo, lettere_ruotate, stecche), 3D (sfere, cubi_isometrici, orizzonte), illustrati (testa_labirinto, occhio, organico), da poster tipografici (specchio, ornamento, gonfiato, xilografia, rilievo, vortice, acquerello, matrice, stropicciato) in `copertine/stili.py`, `stili_illustrati.py` e `stili_tipografici.py`
+- **Palette**: retro, mattone, mostarda, notte, smeraldo, rosa, carbone, mare, neon, girandola, burro, acquerello, inchiostro, grafite (`copertine/palette.py`)
 - **Formati**: banner 1200x400, poster 1080x1350 (con titolo), schermo 1600x900 (cover a tutto schermo, titolo in HTML sopra), favicon 64x64
 
 ```

@@ -9,6 +9,12 @@ PALETTE = {
     "rosa":     dict(sfondo="#f4a0c0", carta="#ffffff", ink="#111111", acc=["#e30613", "#111111", "#ffffff", "#ffd0e0"]),
     "carbone":  dict(sfondo="#0a0a0a", carta="#ffffff", ink="#0a0a0a", acc=["#ffffff", "#9a9a9a", "#e30613", "#4a4a4a"]),
     "mare":     dict(sfondo="#3d8fc4", carta="#f0e6d2", ink="#0d1a2b", acc=["#d6452a", "#0d1a2b", "#f0e6d2", "#8fc3e0"]),
+    "neon":     dict(sfondo="#050805", carta="#eaffe0", ink="#050805", acc=["#39ff14", "#1fa30a", "#b6ff9e", "#0d4d05"]),
+    "girandola": dict(sfondo="#ffcc00", carta="#fff3c4", ink="#1a1200", acc=["#d4003c", "#1a1200", "#fff3c4", "#a30030"]),
+    "burro":    dict(sfondo="#ffd400", carta="#fff6b8", ink="#2a2000", acc=["#f2bf00", "#fff6b8", "#c99700", "#2a2000"]),
+    "acquerello": dict(sfondo="#f1ead9", carta="#fbf7ea", ink="#1b2a33", acc=["#1d4e6b", "#4f8fa6", "#a9c9d1", "#0f2a3a"]),
+    "inchiostro": dict(sfondo="#f4f4f1", carta="#ffffff", ink="#0b0b0b", acc=["#0b0b0b", "#b9a86a", "#555555", "#e0e0dc"]),
+    "grafite":  dict(sfondo="#12100d", carta="#8a8f8f", ink="#12100d", acc=["#3b4a4a", "#5a3a32", "#2c3a3b", "#c9502a"]),
 }
 
 

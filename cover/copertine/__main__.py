@@ -37,6 +37,15 @@ DEMO = {
     "occhio": ("notte", "Sguardo", "Vedere oltre", "", 0),
     "organico": ("smeraldo", "Fioritura", "Forme che crescono", "", 5),
     "orizzonte": ("retro", "Tramonto", "L'ultima ora di luce", "", 0),
+    "specchio": ("neon", "Simmetria", "Tutto si riflette", "RAVE", 0),
+    "ornamento": ("grafite", "Guardare", "Non è vedere", "VEDERE", 3),
+    "gonfiato": ("burro", "Lieve", "Quasi in volo", "HAPPY", 0),
+    "xilografia": ("inchiostro", "Qualità", "Stampata a mano", "QUALITA", 2),
+    "rilievo": ("burro", "Montagna", "Curve di livello", "ALPI", 1),
+    "vortice": ("girandola", "Jazz", "Dal vivo", "", 0),
+    "acquerello": ("acquerello", "Regata", "Cento anni di vela", "VELA", 4),
+    "matrice": ("carbone", "Scrittura mossa", "Pixel in movimento", "SCRITTO", 0),
+    "stropicciato": ("inchiostro", "Lettura", "Carta e voce", "LETTURA", 5),
 }
 
 
