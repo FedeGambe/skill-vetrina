@@ -23,11 +23,14 @@ Nuovo stile: una funzione in `stili.py` e aggiungila a `STILI`. Nuova palette: u
 ## Installazione (su qualsiasi PC)
 
 ```
-pip install git+https://github.com/<utente>/copertine     # libreria + comando
+git clone https://github.com/FedeGambe/skill-vetrina
+cd skill-vetrina/cover
+pip install -e .
 python -m copertine installa-skill                         # copia la skill in ~/.claude/skills/copertine
 ```
 
-Per modificare o aggiungere stili e palette: `git clone`, poi `pip install -e .` nel clone, e committa/pusha le modifiche.
+Serve il clone con `-e` (non `pip install git+...`): `fatte/` sta nel clone e non è su GitHub; il clone serve anche per modificare stili e palette (poi committa/pusha).
+`pubblica` cerca il sito `FedeGambe.github.io` accanto alla cartella di lavoro: è il setup dell'autore, altrimenti ignoralo.
 Dopo l'installazione riavvia Claude Code: basta chiedere una copertina in qualsiasi progetto.
 
 ## Uso con Claude
