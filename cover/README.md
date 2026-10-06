@@ -48,3 +48,13 @@ python -m copertine registra --svg copertina.svg --progetto nome --note "stile, 
 ```
 
 Funziona dal clone del repo (installazione `pip install -e .`), perché `fatte/` sta nella radice del repository.
+
+## Sito dei progetti
+
+`fatte/progetti.json` è l'elenco delle card (titolo, descrizione, tag, anno, link, cover). Per aggiornare il sito:
+
+```
+python -m copertine sito -o ../FedeGambe.github.io     # copia le cover in img/ e scrive progetti.json
+```
+
+`index.html` del sito legge `progetti.json` (serve un server: GitHub Pages va bene, in locale `python -m http.server`). Nuovo progetto: `registra` con `--titolo/--desc/--tag`, poi `sito`.

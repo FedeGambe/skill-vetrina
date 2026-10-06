@@ -1,7 +1,9 @@
 """CLI:  python -m copertine <stile> [-p palette] [-f banner|poster|favicon] [-t titolo] [-s sottotitolo] [-o file.svg]
        python -m copertine galleria [-o galleria.html]     anteprima di tutti gli stili
-       python -m copertine installa-skill                  installa la skill per Claude Code"""
+       python -m copertine installa-skill                  installa la skill per Claude Code
+       python -m copertine sito -o <cartella-sito>         copia le cover in <sito>/img e scrive <sito>/progetti.json"""
 import argparse
+import json
 import shutil
 from datetime import date
 from pathlib import Path
@@ -49,7 +51,7 @@ def galleria(uscita):
 FATTE = Path(__file__).resolve().parent.parent / "fatte"  # richiede il clone / installazione editabile
 
 
-def registra(svg, progetto, note):
+def registra(svg, progetto, note, scheda=None):
     """Copia l'SVG in fatte/ e aggiunge una riga a fatte/indice.md: Claude le legge per non ripetere le copertine."""
     FATTE.mkdir(exist_ok=True)
     oggi = date.today().isoformat()
@@ -62,15 +64,38 @@ def registra(svg, progetto, note):
         indice.write_text("\n".join(intestazione) + "\n", encoding="utf-8")
     with indice.open("a", encoding="utf-8") as f:
         f.write(f"| {oggi} | {progetto} | [{nome}]({nome}) | {note} |\n")
+    if scheda:  # dati della card del sito: fatte/progetti.json, una voce per repo (rifatta = sostituita)
+        voci = [v for v in carica_progetti() if v["repo"] != progetto] + [{"repo": progetto, **scheda, "img": nome}]
+        (FATTE / "progetti.json").write_text(json.dumps(voci, ensure_ascii=False, indent=1), encoding="utf-8")
     print("registrata in", FATTE / nome)
+
+
+def carica_progetti():
+    f = FATTE / "progetti.json"
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else []
+
+
+def sito(dest):
+    """Copia le cover in <dest>/img e scrive <dest>/progetti.json: il sito legge solo quello."""
+    (dest / "img").mkdir(parents=True, exist_ok=True)
+    voci = carica_progetti()
+    for v in voci:
+        shutil.copy(FATTE / v["img"], dest / "img" / v["img"])
+        v["img"] = "img/" + v["img"]
+    (dest / "progetti.json").write_text(json.dumps(voci, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(len(voci), "progetti scritti in", dest)
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(prog="copertine")
-    ap.add_argument("stile", choices=[*STILI, "galleria", "installa-skill", "registra"])
+    ap.add_argument("stile", choices=[*STILI, "galleria", "installa-skill", "registra", "sito"])
     ap.add_argument("--svg", help="registra: file SVG della copertina fatta")
     ap.add_argument("--progetto", help="registra: progetto per cui è stata fatta")
     ap.add_argument("--note", default="", help="registra: stile di partenza, palette, elemento legato al tema")
+    ap.add_argument("--desc", help="registra: descrizione della card del sito (con --titolo, --tag, --anno)")
+    ap.add_argument("--tag", default="", help="registra: tag separati da virgola")
+    ap.add_argument("--anno", type=int, default=date.today().year)
+    ap.add_argument("--live", default="", help="registra: link alla pagina online del progetto, se c'è")
     ap.add_argument("-p", "--palette", choices=PALETTE, default="retro")
     ap.add_argument("-f", "--formato", choices=FORMATI, default="banner")
     ap.add_argument("-t", "--titolo", default="")
@@ -85,7 +110,11 @@ if __name__ == "__main__":
         shutil.copy(Path(__file__).with_name("SKILL.md"), dest / "SKILL.md")
         print("skill installata in", dest)
     elif a.stile == "registra":  # salva la copertina in fatte/ e la annota in fatte/indice.md
-        registra(Path(a.svg), a.progetto, a.note)
+        scheda = {"t": a.titolo, "d": a.desc, "tags": [x.strip() for x in a.tag.split(",") if x.strip()], "y": a.anno,
+                  **({"live": a.live} if a.live else {})} if a.titolo and a.desc else None
+        registra(Path(a.svg), a.progetto, a.note, scheda)
+    elif a.stile == "sito":  # cover + progetti.json per il sito dei progetti
+        sito(Path(a.output))
     elif a.stile == "galleria":
         galleria(a.output or "galleria.html")
     else:

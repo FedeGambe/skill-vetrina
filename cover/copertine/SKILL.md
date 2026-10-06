@@ -32,8 +32,9 @@ Per estendere stili e palette in modo duraturo serve l'installazione editabile d
 5. **Integra.** Se la pagina ha titolo e testo di apertura, fai una **cover a grandezza schermo** (non un banner sotto il testo): sezione alta esattamente `100svh`, SVG assoluto a tutto schermo (`inset:0`, `preserveAspectRatio="xMidYMax slice"`, formato `schermo` 1600x900 con la grafica nel 62% inferiore), titolo e sottotitolo HTML a tutta larghezza in alto nei colori della palette (z-index sopra l'SVG), diciture in basso. Esempio: `src/copertina.py` e `analisi.html` del progetto when-to-buy-iphone. Banner: SVG inline nella pagina (`preserveAspectRatio="xMidYMid slice"` con altezza fissata via CSS). Favicon: `<link rel="icon" type="image/svg+xml" href="{favicon_uri(...)}">`. Allinea i colori della pagina alla palette (variabili CSS, tema scuro compreso).
 6. **Itera** sui commenti dell'utente: cambiare solo ciò che chiede (forme, colori, complessità).
 7. **Registra la copertina fatta**, quando l'utente la accetta: salva l'SVG a sé (se è inline nella pagina, estrailo) e lancia
-   `python -m copertine registra --svg file.svg --progetto <nome-progetto> --note "stile di partenza, palette, elemento legato al tema"`.
-   Copia lo SVG in `fatte/` e aggiunge una riga a `fatte/indice.md`. Se ne fai una nuova per lo stesso progetto, registra la versione finale. Poi committa (e pusha, se l'utente vuole) così le altre macchine la vedono.
+   `python -m copertine registra --svg file.svg --progetto <nome-repo-github> --note "stile di partenza, palette, elemento legato al tema" --titolo "Titolo card" --desc "Descrizione breve" --tag "Tema1,Tema2" [--anno 2026] [--live <link pagina online>]`.
+   Copia lo SVG in `fatte/`, aggiunge una riga a `fatte/indice.md` e (con `--titolo` e `--desc`) la voce della card in `fatte/progetti.json`. `--progetto` = nome esatto della repo su GitHub (serve al link "Codice"). Se ne fai una nuova per lo stesso progetto, registra la versione finale.
+8. **Aggiorna il sito dei progetti** (`FedeGambe.github.io`): `python -m copertine sito -o <cartella-del-sito>` copia le cover in `img/` e riscrive `progetti.json`, che `index.html` legge per costruire le card. Poi commit e push del sito. Le cover devono avere la grafica che regge il taglio 5:7 (`object-fit: cover`, ancorata in basso).
 
 ## Regole
 

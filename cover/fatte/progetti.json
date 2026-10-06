@@ -1,0 +1,63 @@
+[
+ {
+  "repo": "when-to-buy-iphone",
+  "t": "Quando comprare l'iPhone",
+  "d": "Tracker dei prezzi iPhone con analisi temporale, previsioni e scraping automatico.",
+  "tags": [
+   "Scraping",
+   "Previsioni",
+   "Serie storiche"
+  ],
+  "y": 2026,
+  "live": "/when-to-buy-iphone/",
+  "img": "2026-10-06-when-to-buy-iphone.svg"
+ },
+ {
+  "repo": "Master_s_thesis_Data_science",
+  "t": "Tesi magistrale",
+  "d": "Analisi statistiche e predittive: regressione logistica, clustering, modelli ML e DL per previsione e classificazione.",
+  "tags": [
+   "Statistica",
+   "Machine Learning",
+   "Deep Learning"
+  ],
+  "y": 2026,
+  "live": "https://tesi.federicogamberini.it/",
+  "img": "tesi.svg"
+ },
+ {
+  "repo": "bond-etf-target-maturity-analysis",
+  "t": "Target Maturity ETF Planner",
+  "d": "Scraping dei rendimenti e simulazione di strategie di investimento con ETF obbligazionari a scadenza.",
+  "tags": [
+   "Finanza",
+   "Scraping",
+   "Simulazione"
+  ],
+  "y": 2026,
+  "img": "etf.svg"
+ },
+ {
+  "repo": "Vehicle_Price_Monitor",
+  "t": "Vehicle Price Monitor",
+  "d": "Monitoraggio dei prezzi delle auto usate: web scraping e analisi per trovare le offerte migliori per prezzo, chilometraggio e distanza.",
+  "tags": [
+   "Scraping",
+   "Analisi"
+  ],
+  "y": 2026,
+  "img": "auto.svg"
+ },
+ {
+  "repo": "Bitcoin_Prediction",
+  "t": "Bitcoin Prediction",
+  "d": "Crypto Trend & Sentiment: previsione del prezzo di Bitcoin e del Fear and Greed Index con LSTM, LightGBM e Random Forest.",
+  "tags": [
+   "Machine Learning",
+   "Deep Learning",
+   "Finanza"
+  ],
+  "y": 2025,
+  "img": "bitcoin.svg"
+ }
+]
