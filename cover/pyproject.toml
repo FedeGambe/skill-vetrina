@@ -1,0 +1,11 @@
+[project]
+name = "copertine"
+version = "0.1.0"
+description = "Copertine SVG in stile paperback vintage, con skill per Claude Code"
+requires-python = ">=3.9"
+
+[tool.setuptools]
+packages = ["copertine"]
+
+[tool.setuptools.package-data]
+copertine = ["SKILL.md"]
