@@ -98,7 +98,7 @@ def sito(dest):
 
 
 def pubblica(a):
-    """registra + sito + commit (e push con --push) in entrambe le repo: copertine (fatte/) e il sito."""
+    """registra + sito + commit (e push con --push) della sola repo del sito; fatte/ resta locale."""
     dest = Path(a.output) if a.output else SITO
     docs = Path.home() / a.progetto / "docs"  # ponytail: repo dei progetti in ~/<nome>
     svg = Path(a.svg) if a.svg else next((f for f in (docs / "copertina-verticale.svg", docs / "copertina.svg") if f.exists()), docs / "copertina-verticale.svg")
@@ -114,7 +114,7 @@ def pubblica(a):
     a.anno = a.anno or vecchia.get("y") or date.today().year
     registra(svg, a.progetto, a.note, scheda(a))
     sito(dest)
-    for repo, cosa in ((FATTE.parent.parent, "cover/fatte"), (dest, ".")):
+    for repo, cosa in ((dest, "."),):
         git = ["git", "-C", str(repo)]
         subprocess.run([*git, "add", cosa], check=True)
         if subprocess.run([*git, "diff", "--cached", "--quiet"]).returncode:  # c'è qualcosa da committare
