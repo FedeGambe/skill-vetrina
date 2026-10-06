@@ -2,12 +2,15 @@
        python -m copertine galleria [-o galleria.html]     anteprima di tutti gli stili
        python -m copertine installa-skill                  installa la skill per Claude Code
        python -m copertine sito -o <cartella-sito>         copia le cover in <sito>/img e scrive <sito>/progetti.json
-       python -m copertine pubblica --svg .. --progetto .. --titolo .. --desc .. --tag .. -o <sito> [--push]
-                                                           registra + sito + commit nelle due repo (push solo con --push)"""
+       python -m copertine pubblica --progetto <repo> [--note ..] [--push]
+                                                           registra + sito + commit nelle due repo (push solo con --push).
+                                                           SVG = ~/<repo>/docs/copertina.svg, sito = accanto a Elaborati_Repo,
+                                                           card da progetti.json (progetto nuovo: --titolo --desc --tag --live)"""
 import argparse
 import json
 import shutil
 import subprocess
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -52,6 +55,7 @@ def galleria(uscita):
 
 
 FATTE = Path(__file__).resolve().parent.parent / "fatte"  # richiede il clone / installazione editabile
+SITO = FATTE.parent.parent.parent / "FedeGambe.github.io"  # accanto a Elaborati_Repo
 
 
 def registra(svg, progetto, note, scheda=None):
@@ -85,14 +89,29 @@ def sito(dest):
     for v in voci:
         shutil.copy(FATTE / v["img"], dest / "img" / v["img"])
         v["img"] = "img/" + v["img"]
+    usate = {Path(v["img"]).name for v in voci}
+    for f in (dest / "img").glob("*.svg"):  # cover non più usate da nessuna card
+        if f.name not in usate:
+            f.unlink()
     (dest / "progetti.json").write_text(json.dumps(voci, ensure_ascii=False, indent=1), encoding="utf-8")
     print(len(voci), "progetti scritti in", dest)
 
 
 def pubblica(a):
     """registra + sito + commit (e push con --push) in entrambe le repo: copertine (fatte/) e il sito."""
-    dest = Path(a.output)
-    registra(Path(a.svg), a.progetto, a.note, scheda(a))
+    dest = Path(a.output) if a.output else SITO
+    svg = Path(a.svg) if a.svg else Path.home() / a.progetto / "docs" / "copertina.svg"  # ponytail: repo dei progetti in ~/<nome>
+    if not svg.exists():
+        sys.exit(f"SVG non trovato: {svg} (passa --svg)")
+    vecchia = next((v for v in carica_progetti() if v["repo"] == a.progetto), {})
+    if not (a.titolo or vecchia.get("t")) or not (a.desc or vecchia.get("d")):
+        sys.exit("progetto nuovo: servono --titolo e --desc")
+    a.titolo = a.titolo or vecchia["t"]
+    a.desc = a.desc or vecchia["d"]
+    a.tag = a.tag or ",".join(vecchia.get("tags", []))
+    a.live = a.live or vecchia.get("live", "")
+    a.anno = a.anno or vecchia.get("y") or date.today().year
+    registra(svg, a.progetto, a.note, scheda(a))
     sito(dest)
     for repo, cosa in ((FATTE.parent.parent, "cover/fatte"), (dest, ".")):
         git = ["git", "-C", str(repo)]
@@ -106,7 +125,7 @@ def pubblica(a):
 
 def scheda(a):
     if a.titolo and a.desc:
-        return {"t": a.titolo, "d": a.desc, "tags": [x.strip() for x in a.tag.split(",") if x.strip()], "y": a.anno,
+        return {"t": a.titolo, "d": a.desc, "tags": [x.strip() for x in a.tag.split(",") if x.strip()], "y": a.anno or date.today().year,
                 **({"live": a.live} if a.live else {})}
 
 
@@ -118,7 +137,7 @@ if __name__ == "__main__":
     ap.add_argument("--note", default="", help="registra: stile di partenza, palette, elemento legato al tema")
     ap.add_argument("--desc", help="registra: descrizione della card del sito (con --titolo, --tag, --anno)")
     ap.add_argument("--tag", default="", help="registra: tag separati da virgola")
-    ap.add_argument("--anno", type=int, default=date.today().year)
+    ap.add_argument("--anno", type=int, default=0, help="default: anno della card esistente, o quello corrente")
     ap.add_argument("--live", default="", help="registra: link alla pagina online del progetto, se c'è")
     ap.add_argument("--push", action="store_true", help="pubblica: dopo il commit fa anche git push nelle due repo")
     ap.add_argument("-p", "--palette", choices=PALETTE, default="retro")
