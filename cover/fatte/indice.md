@@ -9,3 +9,4 @@ Lette da Claude prima di crearne una nuova: non ripetere stile, composizione e p
 | 2026-10-06 | Vehicle_Price_Monitor | [auto.svg](auto.svg) | grigi con rosso #e30613 |
 | 2026-10-06 | Bitcoin_Prediction | [bitcoin.svg](bitcoin.svg) | giallo #e8b923 e rosso #b3261e su nero #0d0d0d |
 | 2026-10-06 | Master_s_thesis_Data_science | [tesi.svg](tesi.svg) | blu notte #101a33, crema #f2ead7, ocra #e0a82e |
+| 2026-10-06 | Wally | [2026-10-06-Wally.svg](2026-10-06-Wally.svg) | Logo app su sfondo teal, nessuna grafica |
