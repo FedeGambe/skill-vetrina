@@ -57,4 +57,8 @@ Funziona dal clone del repo (installazione `pip install -e .`), perché `fatte/`
 python -m copertine sito -o ../FedeGambe.github.io     # copia le cover in img/ e scrive progetti.json
 ```
 
-`index.html` del sito legge `progetti.json` (serve un server: GitHub Pages va bene, in locale `python -m http.server`). Nuovo progetto: `registra` con `--titolo/--desc/--tag`, poi `sito`.
+`index.html` del sito legge `progetti.json` (serve un server: GitHub Pages va bene, in locale `python -m http.server`). Nuovo progetto, in un comando (registra + sito + commit nelle due repo; `--push` per pubblicare):
+
+```
+python -m copertine pubblica --svg cover.svg --progetto <repo> --titolo "Titolo" --desc "Descrizione" --tag "A,B" --live /<repo>/ -o ../FedeGambe.github.io
+```

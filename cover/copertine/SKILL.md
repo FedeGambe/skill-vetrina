@@ -34,7 +34,9 @@ Per estendere stili e palette in modo duraturo serve l'installazione editabile d
 7. **Registra la copertina fatta**, quando l'utente la accetta: salva l'SVG a sé (se è inline nella pagina, estrailo) e lancia
    `python -m copertine registra --svg file.svg --progetto <nome-repo-github> --note "stile di partenza, palette, elemento legato al tema" --titolo "Titolo card" --desc "Descrizione breve" --tag "Tema1,Tema2" [--anno 2026] [--live <link pagina online>]`.
    Copia lo SVG in `fatte/`, aggiunge una riga a `fatte/indice.md` e (con `--titolo` e `--desc`) la voce della card in `fatte/progetti.json`. `--progetto` = nome esatto della repo su GitHub (serve al link "Codice"). Se ne fai una nuova per lo stesso progetto, registra la versione finale.
-8. **Aggiorna il sito dei progetti** (`FedeGambe.github.io`): `python -m copertine sito -o <cartella-del-sito>` copia le cover in `img/` e riscrive `progetti.json`, che `index.html` legge per costruire le card. Poi commit e push del sito. Le cover devono avere la grafica che regge il taglio 5:7 (`object-fit: cover`, ancorata in basso).
+8. **Pubblica nel sito dei progetti** (`FedeGambe.github.io`). Comando unico, al posto dei passi 7 e 8 a mano:
+   `python -m copertine pubblica --svg file.svg --progetto <nome-repo-github> --titolo "…" --desc "…" --tag "A,B" --note "…" [--anno 2026] [--live /nome-repo/] -o <cartella-del-sito>`
+   Registra la cover, copia le cover in `img/`, riscrive `progetti.json` (che `index.html` legge per le card) e fa commit nelle due repo (`copertine` e sito). Il push solo con `--push`: chiedere prima all'utente. In Git Bash un `--live /nome/` viene riscritto come percorso Windows: usare `MSYS_NO_PATHCONV=1` davanti al comando. Le cover devono reggere il taglio 5:7 delle card (`object-fit: cover`, ancorata in basso).
 
 ## Regole
 

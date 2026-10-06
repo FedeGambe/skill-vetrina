@@ -1,10 +1,13 @@
 """CLI:  python -m copertine <stile> [-p palette] [-f banner|poster|favicon] [-t titolo] [-s sottotitolo] [-o file.svg]
        python -m copertine galleria [-o galleria.html]     anteprima di tutti gli stili
        python -m copertine installa-skill                  installa la skill per Claude Code
-       python -m copertine sito -o <cartella-sito>         copia le cover in <sito>/img e scrive <sito>/progetti.json"""
+       python -m copertine sito -o <cartella-sito>         copia le cover in <sito>/img e scrive <sito>/progetti.json
+       python -m copertine pubblica --svg .. --progetto .. --titolo .. --desc .. --tag .. -o <sito> [--push]
+                                                           registra + sito + commit nelle due repo (push solo con --push)"""
 import argparse
 import json
 import shutil
+import subprocess
 from datetime import date
 from pathlib import Path
 
@@ -86,9 +89,30 @@ def sito(dest):
     print(len(voci), "progetti scritti in", dest)
 
 
+def pubblica(a):
+    """registra + sito + commit (e push con --push) in entrambe le repo: copertine (fatte/) e il sito."""
+    dest = Path(a.output)
+    registra(Path(a.svg), a.progetto, a.note, scheda(a))
+    sito(dest)
+    for repo, cosa in ((FATTE.parent.parent, "cover/fatte"), (dest, ".")):
+        git = ["git", "-C", str(repo)]
+        subprocess.run([*git, "add", cosa], check=True)
+        if subprocess.run([*git, "diff", "--cached", "--quiet"]).returncode:  # c'è qualcosa da committare
+            subprocess.run([*git, "commit", "-m", f"Cover e card: {a.titolo or a.progetto}"], check=True)
+            if a.push:
+                subprocess.run([*git, "push"], check=True)
+        print(repo, "ok")
+
+
+def scheda(a):
+    if a.titolo and a.desc:
+        return {"t": a.titolo, "d": a.desc, "tags": [x.strip() for x in a.tag.split(",") if x.strip()], "y": a.anno,
+                **({"live": a.live} if a.live else {})}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(prog="copertine")
-    ap.add_argument("stile", choices=[*STILI, "galleria", "installa-skill", "registra", "sito"])
+    ap.add_argument("stile", choices=[*STILI, "galleria", "installa-skill", "registra", "sito", "pubblica"])
     ap.add_argument("--svg", help="registra: file SVG della copertina fatta")
     ap.add_argument("--progetto", help="registra: progetto per cui è stata fatta")
     ap.add_argument("--note", default="", help="registra: stile di partenza, palette, elemento legato al tema")
@@ -96,6 +120,7 @@ if __name__ == "__main__":
     ap.add_argument("--tag", default="", help="registra: tag separati da virgola")
     ap.add_argument("--anno", type=int, default=date.today().year)
     ap.add_argument("--live", default="", help="registra: link alla pagina online del progetto, se c'è")
+    ap.add_argument("--push", action="store_true", help="pubblica: dopo il commit fa anche git push nelle due repo")
     ap.add_argument("-p", "--palette", choices=PALETTE, default="retro")
     ap.add_argument("-f", "--formato", choices=FORMATI, default="banner")
     ap.add_argument("-t", "--titolo", default="")
@@ -110,9 +135,9 @@ if __name__ == "__main__":
         shutil.copy(Path(__file__).with_name("SKILL.md"), dest / "SKILL.md")
         print("skill installata in", dest)
     elif a.stile == "registra":  # salva la copertina in fatte/ e la annota in fatte/indice.md
-        scheda = {"t": a.titolo, "d": a.desc, "tags": [x.strip() for x in a.tag.split(",") if x.strip()], "y": a.anno,
-                  **({"live": a.live} if a.live else {})} if a.titolo and a.desc else None
-        registra(Path(a.svg), a.progetto, a.note, scheda)
+        registra(Path(a.svg), a.progetto, a.note, scheda(a))
+    elif a.stile == "pubblica":
+        pubblica(a)
     elif a.stile == "sito":  # cover + progetti.json per il sito dei progetti
         sito(Path(a.output))
     elif a.stile == "galleria":
