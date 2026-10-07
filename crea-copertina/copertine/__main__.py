@@ -158,8 +158,8 @@ if __name__ == "__main__":
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("-o", "--output")
     a = ap.parse_args()
-    if a.stile == "installa-skill":  # copia la skill di Claude Code in ~/.claude/skills/copertine
-        dest = Path.home() / ".claude" / "skills" / "copertine"
+    if a.stile == "installa-skill":  # copia la skill di Claude Code in ~/.claude/skills/crea-copertina
+        dest = Path.home() / ".claude" / "skills" / "crea-copertina"
         dest.mkdir(parents=True, exist_ok=True)
         shutil.copy(Path(__file__).with_name("SKILL.md"), dest / "SKILL.md")
         print("skill installata in", dest)

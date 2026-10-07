@@ -24,9 +24,9 @@ Nuovo stile: una funzione in `stili.py` e aggiungila a `STILI`. Nuova palette: u
 
 ```
 git clone https://github.com/FedeGambe/skill-vetrina
-cd skill-vetrina/cover
+cd skill-vetrina/crea-copertina
 pip install -e .
-python -m copertine installa-skill                         # copia la skill in ~/.claude/skills/copertine
+python -m copertine installa-skill                         # copia la skill in ~/.claude/skills/crea-copertina
 ```
 
 Serve il clone con `-e` (non `pip install git+...`): `fatte/` sta nel clone e non è su GitHub; il clone serve anche per modificare stili e palette (poi committa/pusha).
