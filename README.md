@@ -4,6 +4,7 @@ Skill per Claude che trasformano un repository in una pagina HTML di riassunto/p
 
 - `crea-copertina/`: libreria Python `copertine` + skill `crea-copertina` (SVG: cover a schermo intero, banner, poster, favicon). Vedi `crea-copertina/README.md`.
 - `crea-pagina-html/`: skill `crea-pagina-html` + `template.html` (barra fissa, indice, capitoli, tema chiaro/scuro, cover a tutto schermo). Claude compila il template leggendo il repo e usa `crea-copertina` per la cover.
+- `crea-scheda-progetto/`: skill `crea-scheda-progetto` (crea/verifica `docs/progetto.json`, la scheda per la card del sito; richiamata dalle altre tre).
 - `crea-dashboard-html/`: skill `crea-dashboard-html` + `template.html` + `esempio.html` (dashboard interattiva: controlli a sinistra, KPI e grafico a destra, barra mobile, tema chiaro/scuro).
 
 ## Installazione
@@ -17,8 +18,9 @@ pip install -e .
 python -m copertine installa-skill                      # skill crea-copertina -> ~/.claude/skills/crea-copertina
 cp -r ../crea-pagina-html ~/.claude/skills/crea-pagina-html  # skill crea-pagina-html (SKILL.md + template.html)
 cp -r ../crea-dashboard-html ~/.claude/skills/crea-dashboard-html  # skill crea-dashboard-html
+cp -r ../crea-scheda-progetto ~/.claude/skills/crea-scheda-progetto  # skill crea-scheda-progetto
 ```
-In PowerShell: `Copy-Item -Recurse ..\crea-pagina-html $HOME\.claude\skills\crea-pagina-html` (idem per `crea-dashboard-html`).
+In PowerShell: `Copy-Item -Recurse ..\crea-pagina-html $HOME\.claude\skills\crea-pagina-html` (idem per `crea-dashboard-html` e `crea-scheda-progetto`).
 Poi riavvia Claude Code.
 
 ## Uso

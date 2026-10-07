@@ -4,7 +4,7 @@
        python -m copertine sito -o <cartella-sito>         copia le cover in <sito>/img e scrive <sito>/progetti.json
        python -m copertine pubblica --progetto <repo> [--note ..] [--push]
                                                            registra + sito + commit nelle due repo (push solo con --push).
-                                                           SVG = ~/<repo>/docs/copertina-verticale.svg (o copertina.svg), sito = accanto a Elaborati_Repo,
+                                                           SVG = ~/<repo>/docs/img/cover_verticale.svg, scheda = docs/progetto.json, sito = accanto a Elaborati_Repo,
                                                            card da progetti.json (progetto nuovo: --titolo --desc --tag --live)"""
 import argparse
 import json
@@ -110,10 +110,11 @@ def pubblica(a):
     """registra + sito + commit (e push con --push) della sola repo del sito; fatte/ resta locale."""
     dest = Path(a.output) if a.output else SITO
     docs = Path.home() / a.progetto / "docs"  # ponytail: repo dei progetti in ~/<nome>
-    svg = Path(a.svg) if a.svg else next((f for f in (docs / "copertina-verticale.svg", docs / "copertina.svg") if f.exists()), docs / "copertina-verticale.svg")
+    svg = Path(a.svg) if a.svg else docs / "img" / "cover_verticale.svg"
     if not svg.exists():
         sys.exit(f"SVG non trovato: {svg} (passa --svg)")
-    vecchia = next((v for v in carica_progetti() if v["repo"] == a.progetto), {})
+    scheda_docs = docs / "progetto.json"  # scheda del progetto (skill crea-scheda-progetto): ha la precedenza su fatte/progetti.json
+    vecchia = json.loads(scheda_docs.read_text(encoding="utf-8")) if scheda_docs.exists() else next((v for v in carica_progetti() if v["repo"] == a.progetto), {})
     if not (a.titolo or vecchia.get("t")) or not (a.desc or vecchia.get("d")):
         sys.exit("progetto nuovo: servono --titolo e --desc")
     a.titolo = a.titolo or vecchia["t"]
