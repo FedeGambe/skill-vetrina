@@ -25,6 +25,10 @@ Claude legge il repo e produce **un solo file HTML** partendo da `template.html`
 6. **Controlla nel browser** (skill `browser-automation` con screenshot, o Chrome): cover a schermo intero in orizzontale **e in verticale** (finestra stretta/mobile), titolo leggibile, indice e barra che seguono lo scroll, tema scuro, larghezza mobile. Nessun segnaposto `{{` rimasto: `grep "{{" file.html`.
 7. **Salva** in `docs/index.html` del progetto (crea `docs/` se manca), così è pubblicabile con GitHub Pages (Settings → Pages → branch `main`, cartella `/docs`). Se l'utente indica un altro percorso, usa quello. **Subito dopo** richiama `crea-scheda-progetto` per scrivere in `docs/progetto.json` il campo `live` (`/<repo>/`).
 
+## Telefono (fino a 700px)
+
+Il blocco `COVER MOBILE` del template (non toccarlo) cambia la cover: non è a tutto schermo. In alto c'è il titolo sul fondo pieno della cover, poi la **cover orizzontale** a tutta larghezza (ritagliata 16:7 dal basso). Sottotitolo e tag partono da metà della grafica, su una sfumatura di `--cover`. Il logo in basso a destra è nascosto. Per questo `--cover` deve essere il colore di fondo della cover e la grafica deve stare nella parte bassa dell'SVG orizzontale. Se la cover è un `<picture>` con `<source media="(orientation: portrait)">`, aggiungi `and (min-width: 701px)`, così su telefono resta l'orizzontale. Gerarchia dei font: h1 ≈ 35px > h2 27 > h3 21 > testo 16 > note 13. Controlla a 390px che la pagina non scorra di lato (link lunghi nel footer).
+
 ## Regole
 
 - Lingua della pagina = lingua dell'utente, salvo diversa richiesta.

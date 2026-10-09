@@ -28,6 +28,10 @@ Componenti già nel CSS dell'esempio: segmenti (radio), select, contatore ±, nu
 6. **Controlla nel browser** (skill `browser-automation` o Chrome): console senza errori, ogni controllo cambia il risultato, valori fuori range bloccano, link condiviso ricarica lo stesso stato, tema chiaro e scuro, larghezza mobile con barra fissa. `grep "{{" file.html` deve essere vuoto.
 7. **Salva** in `docs/` del progetto (crea la cartella se manca): `docs/dashboard.html` (o `docs/index.html` se la dashboard è l'unica pagina), pubblicabile con GitHub Pages (Settings → Pages → branch `main`, cartella `/docs`). Dati e modello restano inline nel file; link verso altre pagine solo relativi (`index.html`). Se l'utente indica un altro percorso, usa quello. **Subito dopo** richiama `crea-scheda-progetto` per scrivere `live` in `docs/progetto.json` (`/<repo>/`, oppure `/<repo>/dashboard.html` se non è `index.html`).
 
+## Telefono (fino a 700px)
+
+Il blocco `FONT MOBILE` del template fissa la gerarchia: h1 ≈ 33px > titoli di sezione (h2, `legend` dei gruppi) 20 > testo 16 > etichette 14,4 > note 12,8. Non scendere sotto questi valori con regole più specifiche.
+
 ## Regole
 
 - Lingua della pagina = lingua dell'utente.
