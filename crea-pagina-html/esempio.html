@@ -182,8 +182,11 @@ figure svg{display:block; width:100%; height:auto}
 figure text{fill:#b9ae95; font:11px ui-monospace,Consolas,monospace}
 .leg{display:flex; flex-wrap:wrap; gap:6px 16px; padding:8px 12px 10px; font:600 .72rem/1.3 var(--f-data); color:#d9ccaf}
 .leg i{display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:-1px}
-/* COVER MOBILE (telefono, fino a 700px): la cover non è a tutto schermo. Titolo sul fondo pieno della cover, poi la cover orizzontale
-   intera a tutta larghezza; il testo introduttivo e i tag partono da metà della grafica, su una sfumatura del colore di fondo. Niente logo in basso a destra. */
+/* COVER MOBILE (telefono, fino a 700px): la cover non è a tutto schermo.
+   Con i due livelli (img/cover_sfondo.svg + <img class="soggetto" src="img/cover_soggetto.svg">): il fondo copre tutta la cover, il titolo sta sul fondo,
+   il soggetto parte sotto il titolo, testo introduttivo e tag si appoggiano alla parte bassa del soggetto su una sfumatura. Niente logo in basso a destra.
+   Senza livelli: titolo sul colore della cover, poi la cover orizzontale con sopra testo e tag. */
+.copertina .soggetto{display:none}
 @media (max-width:700px){
   .copertina{display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:auto 34vw auto auto; align-content:start;
     height:auto; min-height:0}
@@ -198,6 +201,19 @@ figure text{fill:#b9ae95; font:11px ui-monospace,Consolas,monospace}
   .copertina::after{content:""; grid-row:3 / 5; grid-column:1; position:absolute; inset:-48px 0 0; z-index:1; pointer-events:none;
     background:linear-gradient(to bottom, transparent, color-mix(in srgb, var(--cover) 72%, transparent) 48px, color-mix(in srgb, var(--cover) 94%, transparent) calc(48px + 16vw), var(--cover))}
   .copertina > .diciture{grid-row:5; grid-column:1}
+
+  /* con i due livelli */
+  .copertina:has(.soggetto){grid-template-rows:auto auto auto auto;
+    background:var(--cover) url("img/cover_sfondo.svg") 50% 100% / cover no-repeat}
+  .copertina:has(.soggetto) .bauhaus, .copertina:has(.soggetto)::after{display:none}
+  .copertina:has(.soggetto) h1{padding-bottom:20px}
+  .copertina .soggetto{grid-row:2; grid-column:1; display:block; position:relative; z-index:1; width:100%;
+    height:auto; max-height:min(64vw, 380px); object-fit:contain; object-position:50% 100%}
+  .copertina .soggetto.largo{height:min(56vw, 340px); max-height:none; object-fit:cover}  /* soggetti a tutta larghezza (strisce): si tagliano i lati */
+  .copertina:has(.soggetto) .sottotitolo{grid-row:3; margin-top:-56px; padding-top:44px;
+    background:linear-gradient(to bottom, transparent, color-mix(in srgb, var(--cover) 80%, transparent) 44px)}
+  .copertina:has(.soggetto) .tags{grid-row:4; background:color-mix(in srgb, var(--cover) 80%, transparent)}
+
   .logo-cover{display:none}
   .solo-largo{display:none}
   .azioni{gap:6px}
