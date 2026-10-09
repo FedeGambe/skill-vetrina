@@ -22,10 +22,11 @@ def componi(cartella, W, H, nome):
     _, _, gw, gh = map(float, vb_g.split())
     largo = gw / gh > 2.6
     y0 = round(H * 0.5); pad = 0 if largo else round(W * 0.06)
-    adatta = "xMidYMax slice" if largo else "xMidYMax meet"
+    basso = 0 if largo else round(H * 0.07)  # margine sotto il soggetto (le strisce larghe arrivano al bordo)
+    adatta = "xMidYMax slice" if largo else "xMidYMin meet"  # i soggetti partono da metà tela
     out = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}">'
            f'<svg width="{W}" height="{H}" viewBox="{vb_s}" preserveAspectRatio="xMidYMax slice">{c_s}</svg>'
-           f'<svg x="{pad}" y="{y0}" width="{W - 2 * pad}" height="{H - y0}" viewBox="{vb_g}" preserveAspectRatio="{adatta}" overflow="hidden">{c_g}</svg>'
+           f'<svg x="{pad}" y="{y0}" width="{W - 2 * pad}" height="{H - y0 - basso}" viewBox="{vb_g}" preserveAspectRatio="{adatta}" overflow="hidden">{c_g}</svg>'
            f'</svg>\n')
     (cartella / nome).write_text(out, encoding="utf-8")
     return largo
