@@ -10,7 +10,8 @@ Un solo file HTML, nessun build, nessuna dipendenza, nessun font esterno. Stessa
 ## Struttura (non cambiarla)
 
 1. **Barra fissa**: "← Progetti" (logo, già nel template), 0-2 link, pulsante Tema.
-2. **Testata**: `h1` con 1-2 parole chiave in `<em>` (arancio), `.intro` di 1-2 frasi, pillole `.dati-modello` (metriche o provenienza dei dati).
+2. **Banner** (come nei simulatori): fondo `docs/img/banner_sfondo.svg` + soggetto `banner_soggetto.svg` (i due livelli della cover del progetto: copia `cover_sfondo.svg` e `cover_soggetto.svg`, oppure scomponi un banner 1200x400 con `crea-copertina/livelli.py banner.svg <indici>`). Dentro: `h1` con 1-2 parole chiave in `<em>` e un sottotitolo breve in maiuscoletto. `{{BANNER_FONDO}}` = colore di fondo dello sfondo, `{{BANNER_TESTO}}`/`{{BANNER_EM}}` = colori leggibili sopra. Su desktop il soggetto sta a destra; su telefono va sotto il titolo, con il sottotitolo sopra la sua parte bassa su una sfumatura. La barra è trasparente sopra il banner e piena quando si scorre.
+2b. **Testata**: `.intro` di 1-2 frasi, pillole `.dati-modello` (metriche o provenienza dei dati).
 3. **Barra azioni** (facoltativa): preset `.pulsante[data-esempio]`, Ripristina, Copia link.
 4. **Griglia 2 colonne**: a sinistra `<form>` con una `.scheda.sezione` per gruppo (legend con `.passo` numerato); a destra `<aside class="esiti">` sticky su desktop: scheda KPI (`#risultato`) + scheda dettaglio/grafico + `details.metodo` ("Come leggere il grafico").
 5. **Barra mobile** `.barra-mobile` col KPI, visibile quando `#risultato` esce dallo schermo.
