@@ -5,7 +5,7 @@ description: Crea una dashboard interattiva in un solo file HTML con banner a du
 
 # dashboard
 
-Un solo file HTML, nessun build, nessuna dipendenza, nessun font esterno. Stessa identità della skill `crea-pagina-html` (carta calda con grana, Georgia, Inter/system-ui, monospace per i numeri, righe nere da 3px, tema scuro di default). Struttura da `template.html`; esempio completo e funzionante in `esempio.html` (predizione BEV: form di 14 campi, indicatore ad arco, cascata dei contributi). Riferimenti già online con la stessa struttura: le dashboard dei simulatori (busta paga, conto deposito), Vehicle Price Monitor e la dashboard della tesi.
+Un solo file HTML, nessun build, nessuna dipendenza, nessun font esterno. Stessa identità della skill `crea-pagina-html` (carta calda con grana, Georgia, Inter/system-ui, monospace per i numeri, righe nere da 3px, tema scuro di default). Struttura da `template.html`; esempio completo e funzionante in `esempio.html` (la dashboard della tesi, predizione BEV: banner a due livelli con soggetto a striscia ruotato, form di 14 campi, indicatore ad arco, cascata dei contributi; i file del banner sono in `img/` accanto). Riferimenti già online con la stessa struttura: le dashboard dei simulatori (busta paga, conto deposito), Vehicle Price Monitor e la dashboard della tesi.
 
 ## Struttura (non cambiarla)
 
