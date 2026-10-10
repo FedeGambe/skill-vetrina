@@ -24,7 +24,7 @@ description: Verifica che il progetto abbia docs/progetto.json (la scheda per la
 - `repo`: nome esatto della repo su GitHub (`git remote get-url origin`, ultimo segmento senza `.git`; se manca il remote, nome della cartella del progetto).
 - `t`: titolo leggibile. `d`: una frase (max ~110 caratteri) su cosa fa. `tags`: 2-4 temi/tecnologie, in maiuscola iniziale. `y`: anno di inizio (primo commit o anno corrente).
 - `live`: percorso della pagina su GitHub Pages, **vuoto finché non esiste l'HTML** (vedi sotto).
-- `img`: sempre `img/cover_verticale.svg` (relativo a `docs/`).
+- `img`: sempre `img/cover_verticale.svg` (relativo a `docs/`). Il sito ne ricava anche gli altri file della card: `cover_sfondo.svg` e `cover_soggetto.svg` (i due livelli, stessa cartella) per la card su desktop e su telefono. Se mancano, la card su telefono resta senza immagine: creali con la skill `crea-copertina`.
 - Contenuti ricavati da README e struttura della repo, senza inventare.
 
 ## Flusso
@@ -38,4 +38,4 @@ description: Verifica che il progetto abbia docs/progetto.json (la scheda per la
    Se esistono sia `index.html` sia `dashboard.html`, `live` resta quello di `index.html`.
 5. JSON valido, 4 spazi di indentazione, UTF-8, accenti non escapati.
 
-Poi il sito si aggiorna con `python -m copertine pubblica --progetto <repo>` (legge `progetto.json` e `docs/img/cover_verticale.svg`).
+Per mettere il progetto sul sito basta aggiungere `{ "repo": "<repo>" }` in `progetti.json` di `FedeGambe.github.io` (vedi il suo `ISTRUZIONI.md`): il sito legge questa scheda e le immagini direttamente dalla repo. Non serve (e non va usato) `python -m copertine pubblica`, che riscrive tutto `progetti.json`.

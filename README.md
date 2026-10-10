@@ -2,10 +2,10 @@
 
 Skill per Claude che trasformano un repository in una pagina HTML di riassunto/presentazione.
 
-- `crea-copertina/`: libreria Python `copertine` + skill `crea-copertina` (SVG: cover a schermo intero, banner, poster, favicon). Vedi `crea-copertina/README.md`.
-- `crea-pagina-html/`: skill `crea-pagina-html` + `template.html` (barra fissa, indice, capitoli, tema chiaro/scuro, cover a tutto schermo). Claude compila il template leggendo il repo e usa `crea-copertina` per la cover.
+- `crea-copertina/`: libreria Python `copertine` + skill `crea-copertina` (SVG: cover a due livelli, fondo + soggetto, da cui si rigenerano cover orizzontale, verticale e banner; favicon) + script `livelli.py`, `livelli_bbox*.js`, `componi.py`. Vedi `crea-copertina/README.md`.
+- `crea-pagina-html/`: skill `crea-pagina-html` + `template.html` (barra fissa, indice, capitoli, tema chiaro/scuro, cover a due livelli: a tutto schermo su desktop, ridotta su telefono con il testo sopra la grafica). Claude compila il template leggendo il repo e usa `crea-copertina` per la cover.
 - `crea-scheda-progetto/`: skill `crea-scheda-progetto` (crea/verifica `docs/progetto.json`, la scheda per la card del sito; richiamata dalle altre tre).
-- `crea-dashboard-html/`: skill `crea-dashboard-html` + `template.html` + `esempio.html` (dashboard interattiva: controlli a sinistra, KPI e grafico a destra, barra mobile, tema chiaro/scuro).
+- `crea-dashboard-html/`: skill `crea-dashboard-html` + `template.html` + `esempio.html` (dashboard interattiva con banner a due livelli in testa come i simulatori: controlli a sinistra, KPI e grafico a destra, barra trasparente sopra il banner, barra mobile, tema chiaro/scuro).
 
 ## Installazione
 
@@ -36,4 +36,4 @@ Poi riavvia Claude Code.
 ## Note
 
 - Usa il clone con `pip install -e .`, non `pip install git+...`: la cartella `crea-copertina/fatte/` (copertine registrate) sta nel clone, non è su GitHub e su un altro PC parte vuota. Il clone serve anche per aggiungere stili e palette.
-- `python -m copertine pubblica` è legato al setup dell'autore: cerca il sito `FedeGambe.github.io` accanto alla cartella di lavoro. Chi scarica la skill può ignorarlo o cambiare il percorso in `crea-copertina/copertine/__main__.py`.
+- `python -m copertine pubblica` è del vecchio flusso e riscrive tutto `progetti.json` del sito: per aggiungere un progetto al sito basta una riga `{ "repo": ... }` (vedi `ISTRUZIONI.md` di `FedeGambe.github.io`).

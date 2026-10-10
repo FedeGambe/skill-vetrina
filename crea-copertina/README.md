@@ -52,7 +52,22 @@ python -m copertine registra --svg copertina.svg --progetto nome --note "stile, 
 
 Funziona dal clone del repo (installazione `pip install -e .`), perché `fatte/` sta nella radice del repository.
 
+## Cover a due livelli
+
+Ogni cover di progetto è fatta di due file in `docs/img/`: `cover_sfondo.svg` (solo il fondo: colore, sfumatura, grafica leggera, grana) e `cover_soggetto.svg` (solo il soggetto su fondo trasparente, viewBox stretto attorno al disegno). Sono la fonte: pagine, card del sito e banner delle dashboard li usano separati, e le cover intere si rigenerano da loro.
+
+```
+python livelli.py docs/img/cover_orizzontale.svg 2      # scompone una cover esistente (2 = indice del figlio che è il soggetto; g1:1- = figli 1.. del gruppo 1)
+node livelli_bbox.js docs/img/cover_soggetto.svg         # stringe il viewBox del soggetto (Playwright per Node)
+node livelli_bbox_intero.js docs/img/cover_soggetto.svg  # idem, ma misura il disegno intero (se era tagliato in fondo)
+python componi.py docs/img                               # rigenera cover_orizzontale.svg e cover_verticale.svg dai due livelli
+```
+
+`livelli.py banner.svg …` scrive invece `banner_sfondo.svg` e `banner_soggetto.svg` (banner delle dashboard). Regole per disegnarli: `copertine/SKILL.md`.
+
 ## Sito dei progetti
+
+Il sito `FedeGambe.github.io` legge card, scheda (`docs/progetto.json`) e immagini direttamente dalle repo dei progetti: per aggiungere un progetto basta una riga `{ "repo": "nome" }` nel suo `progetti.json` (vedi `ISTRUZIONI.md` del sito). I comandi `sito` e `pubblica` qui sotto sono del vecchio flusso e **riscrivono tutto `progetti.json`**: non usarli per aggiornare il sito.
 
 `fatte/progetti.json` è l'elenco delle card (titolo, descrizione, tag, anno, link, cover). Per aggiornare il sito:
 
