@@ -13,9 +13,13 @@ Niente immagine in testa e niente ombre: l'intro è solo tipografia, sul fondo d
 
 - **occhiello** (`{{OCCHIELLO}}`): 2-3 voci separate da ` · ` (tipo di progetto · tecnologia principale · anno), in monospace maiuscolo con un trattino `--c2` davanti;
 - **titolo** su una riga, da bordo a bordo: il JS scala il font sulla larghezza della colonna (max 220px). Se scenderebbe sotto i 44px (telefono, titoli lunghi) torna a capo con il font normale. Titolo breve: 2-5 parole;
-- **sottotitolo** (1-2 frasi) e **tag**, poi una riga da 3px che chiude l'intro.
+- **sottotitolo** (1-2 frasi, a tutta larghezza come il titolo) e **tag**, poi una riga da 3px che chiude l'intro.
 
 La cover del progetto (`docs/img/cover_*.svg`) non va più nella pagina: resta per la card del sito, i social e la favicon.
+
+## Aggiornare una pagina fatta con la vecchia cover
+
+`nuova_intro.py` (stessa cartella) porta una pagina con la cover a tutto schermo all'intro tipografica: `python nuova_intro.py <progetto>/docs/index.html "Tipo · Tecnologia · Anno"`. Toglie la cover e le ombre, tiene titolo, sottotitolo e tag. Le diciture della copertina (es. frontespizio della tesi) diventano una riga di dati sotto i tag. Se la pagina chiama il colore caldo `--arancio` lo usa come `--c2`, e se scorre a scatti mette l'intro come primo punto d'aggancio. Se la conversione fallisce il file non viene toccato. Dopo, controlla la pagina nel browser (punto 6 del flusso).
 
 ## Flusso
 
