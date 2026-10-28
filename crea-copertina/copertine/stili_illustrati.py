@@ -35,6 +35,25 @@ def cubi_isometrici(w, h, p, rng, pid, parola=""):
     return out
 
 
+def scalinata(w, h, p, rng, pid, parola=""):
+    """Colonne di cubi isometrici che scendono a gradini: l'ultima, in rilievo, è l'acquisto."""
+    n = 6
+    s = min(w / (1.732 * n + 1), h / (1.5 * n + .9)) * .96
+    d = .866 * s
+    x0 = w / 2 - (n - 1) * d / 2
+    y0 = h - s * 1.1  # centro del cubo più in basso dell'ultima colonna
+    out = ""
+    for c in range(n):
+        for l in range(n - c):
+            x, y = x0 + c * d, y0 - (n - 1 - c) * s / 2 - l * s
+            col = p["acc"][0] if (c == n - 1) else p["acc"][(c + l) % 3 + 1]
+            facce = [(f"{x:.1f},{y-s:.1f} {x+d:.1f},{y-s/2:.1f} {x:.1f},{y:.1f} {x-d:.1f},{y-s/2:.1f}", mescola(col, "#ffffff", .35)),
+                     (f"{x-d:.1f},{y-s/2:.1f} {x:.1f},{y:.1f} {x:.1f},{y+s:.1f} {x-d:.1f},{y+s/2:.1f}", col),
+                     (f"{x:.1f},{y:.1f} {x+d:.1f},{y-s/2:.1f} {x+d:.1f},{y+s/2:.1f} {x:.1f},{y+s:.1f}", mescola(col, "#000000", .4))]
+            out += "".join(f'<polygon points="{pt}" fill="{fc}" stroke="{p["sfondo"]}" stroke-width="{s*.04:.1f}" stroke-linejoin="round"/>' for pt, fc in facce)
+    return out
+
+
 def occhio(w, h, p, rng, pid, parola=""):
     """Occhio stilizzato circondato da raggi."""
     cx, cy = w / 2, h / 2
@@ -86,4 +105,4 @@ def orizzonte(w, h, p, rng, pid, parola=""):
     return sole + strisce + terra + raggi + righe
 
 
-NUOVI = (testa_labirinto, cubi_isometrici, occhio, organico, orizzonte)
+NUOVI = (testa_labirinto, cubi_isometrici, occhio, organico, orizzonte, scalinata)

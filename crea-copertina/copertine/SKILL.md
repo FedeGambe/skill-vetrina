@@ -52,7 +52,7 @@ Se l'import fallisce: nel clone di `skill-vetrina`, `cd crea-copertina && pip in
 
 ## Come vengono usati (per controllare il risultato)
 
-- **Pagine HTML** (skill `crea-pagina-html`): desktop → fondo a tutto schermo, testi in alto, soggetto da metà schermo con margine sotto (le strisce arrivano al bordo). Telefono → solo il titolo prima della grafica; poi il soggetto, con testo introduttivo e tag sopra la sua parte bassa su una sfumatura di `--cover` (le strisce arrivano al bordo inferiore, dietro ai testi).
+- **Pagine HTML** (skill `crea-pagina-html`): non usano più la cover in testa (intro solo tipografica); la cover serve alla scheda del sito e alla favicon.
 - **Card del sito**: desktop (5:7) → fondo, testi in alto, soggetto nella metà bassa. Telefono (orizzontali) → titolo, soggetto, descrizione e tag sopra la sua parte bassa su una sfumatura.
 - **Banner delle dashboard** (skill `crea-dashboard-html`): desktop → titolo a sinistra, soggetto a destra (striscia: ruotata, a tutta altezza, larga metà schermo); telefono → come le pagine.
 

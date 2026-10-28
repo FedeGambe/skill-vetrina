@@ -3,7 +3,7 @@
 Skill per Claude che trasformano un repository in una pagina HTML di riassunto/presentazione.
 
 - `crea-copertina/`: libreria Python `copertine` + skill `crea-copertina` (SVG: cover a due livelli, fondo + soggetto, da cui si rigenerano cover orizzontale, verticale e banner; favicon) + script `livelli.py`, `livelli_bbox*.js`, `componi.py`. Vedi `crea-copertina/README.md`.
-- `crea-pagina-html/`: skill `crea-pagina-html` + `template.html` (barra fissa, indice, capitoli, tema chiaro/scuro, cover a due livelli: a tutto schermo su desktop, ridotta su telefono con il testo sopra la grafica). Claude compila il template leggendo il repo e usa `crea-copertina` per la cover.
+- `crea-pagina-html/`: skill `crea-pagina-html` + `template.html` (barra fissa, indice, capitoli, tema chiaro/scuro, intro tipografica con il titolo da bordo a bordo, senza immagine). Claude compila il template leggendo il repo; la cover di `crea-copertina` serve alla scheda e alla favicon.
 - `crea-scheda-progetto/`: skill `crea-scheda-progetto` (crea/verifica `docs/progetto.json`, la scheda per la card del sito; richiamata dalle altre tre).
 - `crea-dashboard-html/`: skill `crea-dashboard-html` + `template.html` + `esempio.html` (dashboard interattiva con banner a due livelli in testa come i simulatori: controlli a sinistra, KPI e grafico a destra, barra trasparente sopra il banner, barra mobile, tema chiaro/scuro).
 
