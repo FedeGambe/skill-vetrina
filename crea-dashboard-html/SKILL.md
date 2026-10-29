@@ -13,10 +13,23 @@ Un solo file HTML, nessun build, nessuna dipendenza, nessun font esterno. Stile 
 2. **Testata** (`.pagina > header`, solo testo, niente banner né immagini): `.occhiello` (tipo di dashboard · modello o fonte, maiuscoletto grigio), `h1` grande in grassetto con 1-2 parole chiave in `<em>` (colore accento, non corsivo), `.intro` di 1-2 frasi, pillole `.dati-modello` (metriche o provenienza dei dati).
 3. **Barra azioni** (facoltativa): preset `.pulsante[data-esempio]`, Ripristina, Copia link.
 4. **Fase input** (`.pagina[data-fase="input"]`): `<form id="profilo">` a tutta larghezza, una `.scheda.sezione` per gruppo (legend con `.passo` numerato; campi su 3 colonne da desktop, `.largo` per una riga intera), in cima la barra dei passi `.passi` (si costruisce da sola dalle `.sezione`: fissa sotto la barra, evidenzia la sezione in vista e colora quelle già passate), in fondo `.invio` con il pulsante `.primario` "Mostra i risultati" (submit).
-5. **Fase risultati** (`data-fase="risultati"`): il form sparisce e al suo posto c'è `.riepilogo` (una pillola `<li>Nome <b>valore</b></li>` per campo + pulsante Modifica che riapre il form); sotto, `.esiti` a tutta larghezza: scheda KPI (`#risultato`, protagonista: fondo sfumato teal o arancio secondo l'esito con le classi `.bev`/`.altro`, arco grande che parte da zero, numero che conta fino al valore) e scheda dettaglio/grafico (barre arrotondate con sfumatura, riga sotto il mouse in evidenza e le altre spente, barre che crescono una dopo l'altra con `--i` e `.entra`) affiancate su desktop (1 : 1,5), una sotto l'altra su telefono, con `details.metodo` ("Come leggere il grafico"). I preset `[data-esempio]` e un link condiviso con lo stato (`#campo=valore`) aprono direttamente i risultati; Ripristina torna al form.
+5. **Fase risultati** (`data-fase="risultati"`): il form sparisce e al suo posto c'è `.riepilogo` (una pillola `<li>Nome <b>valore</b></li>` per campo + pulsante Modifica che riapre il form); sotto, `.esiti` a tutta larghezza: scheda KPI (`#risultato`, protagonista: fondo sfumato col colore dell'esito, classe `su`/`giu`/`neutro`/`cat1`/`cat2`, arco grande che parte da zero, numero che conta fino al valore) e scheda dettaglio/grafico (barre arrotondate con sfumatura, riga sotto il mouse in evidenza e le altre spente, barre che crescono una dopo l'altra con `--i` e `.entra`) affiancate su desktop (1 : 1,5), una sotto l'altra su telefono, con `details.metodo` ("Come leggere il grafico"). I preset `[data-esempio]` e un link condiviso con lo stato (`#campo=valore`) aprono direttamente i risultati; Ripristina torna al form.
 6. **Footer** con nota di cautela (cosa il numero NON dice) e firma.
 
-Componenti già nel CSS dell'esempio: segmenti (radio, la scelta attiva è piena col colore del testo), select, contatore ±, numero con unità, cursore (range), arco/indicatore SVG, verdetto, cascata a barre, legenda. Se ne serve uno nuovo, aggiungilo con le variabili `--*` (teal = verso positivo/principale, arancio = negativo/accento), mai colori fissi, bordi da 1px, ombra solo `var(--ombra)` sulle card.
+Componenti già nel CSS dell'esempio: segmenti (radio, la scelta attiva è piena col colore del testo), select, contatore ±, numero con unità, cursore (range), arco/indicatore SVG, verdetto, cascata a barre, legenda. Se ne serve uno nuovo, aggiungilo con le variabili della palette, mai colori fissi, bordi da 1px, ombra solo `var(--ombra)` sulle card.
+
+## Palette: i colori dicono cosa significa il dato
+
+Mai colori fissi né "blu e rosso" decorativi: ogni colore ha un significato, uguale in tutte le dashboard (variabili in `:root`, versione chiara e scura).
+
+- `--verde` = guadagno, crescita, esito buono (risparmio, rendimento, "buon affare").
+- `--rosso` = perdita, calo, esito cattivo (costo in più, tasse, "sovra prezzato").
+- `--blu` = informazione neutra e interfaccia (passi, focus, cursori, link, esito "in linea").
+- `--ambra` = attenzione (avvisi, campi da correggere, un segno da notare come il prezzo richiesto).
+- `--cat1` … `--cat4` = categorie senza giudizio: serie di un grafico, due alternative (es. BEV contro altro veicolo, "alza" contro "abbassa" il prezzo).
+- `--marchio` = solo il logo e la parola chiave del titolo.
+
+Ognuno ha `-ink` (testo) e `-soft` (fondo) dove serve. Il KPI prende il colore dalla classe di `#risultato`: `su` (verde), `giu` (rosso), `neutro` o nessuna (blu), `cat1`/`cat2`; sfumatura, arco e verdetto seguono da soli. Delta e cascata usano `--sale`/`--scende`: di default verde/rosso; se salire o scendere non è un guadagno o una perdita, ridefiniscili su `.pagina` con `--cat1`/`--cat2`. Nei grafici con più serie usa `--cat1`… nell'ordine, e il verde/rosso solo per valori che sono davvero guadagni o perdite.
 
 ## Flusso
 
