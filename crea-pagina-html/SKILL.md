@@ -1,11 +1,11 @@
 ---
 name: crea-pagina-html
-description: Crea una pagina HTML singola (riassunto o presentazione) di un repository GitHub, con intro tipografica (titolo su una riga da bordo a bordo, senza immagine), indice laterale, barra di avanzamento e tema chiaro/scuro. Usare quando l'utente chiede una pagina, report, presentazione o riassunto HTML di un repo o di un progetto.
+description: Crea una pagina HTML singola (riassunto o presentazione) di un repository GitHub, con intro tipografica (titolo su una riga, circa l'80% della larghezza, senza immagine), indice laterale, barra di avanzamento e tema chiaro/scuro. Usare quando l'utente chiede una pagina, report, presentazione o riassunto HTML di un repo o di un progetto.
 ---
 
 # html
 
-Claude legge il repo e produce **un solo file HTML** partendo da `template.html` (stessa cartella di questa skill). Nessun build, nessuna dipendenza, nessun font esterno. Stile del sito `FedeGambe.github.io`: carta calda con grana, titoli Georgia, testo Inter/system-ui, etichette monospace maiuscole, righe nere da 3px, tema scuro di default (salvato in localStorage). Nel titolo metti 1-2 parole chiave in `<em>` (corsivo arancio).
+Claude legge il repo e produce **un solo file HTML** partendo da `template.html` (stessa cartella di questa skill). Nessun build, nessuna dipendenza, nessun font esterno. Stile del sito `FedeGambe.github.io`: carta chiara con grana leggera, titoli Georgia, testo Inter/system-ui, etichette monospace maiuscole, righe nere da 3px, tema chiaro di default (lo scuro col pulsante, salvato in localStorage). Nel titolo metti 1-2 parole chiave in `<em>` (corsivo arancio).
 
 ## L'intro
 
@@ -32,12 +32,12 @@ La cover del progetto (`docs/img/cover_*.svg`) non va più nella pagina: resta p
 5. **Contenuti.** Elementi pronti nel CSS: `.kpi > div > b + span` (numeri chiave nella Sintesi), `.tabella > table` (con `th[data-k]` ordinabili, `.badge`, `.pager`), `.conclusione` (riquadro di sintesi), `.barra-filtri` (filtri globali sticky sotto la barra, gruppi di pillole `.gruppo button.on` + `input[type=search]`), `figure` + `.leg` (legenda), `code`, liste. Esempio completo: `esempio.html` (stessa cartella): copia da lì struttura e JS dei filtri.
    **Grafici (stile dell'esempio):**
    - Plotly 2.35.2 da CDN (`<script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js">`) per grafici interattivi; è l'unica dipendenza esterna ammessa. Per grafici semplici e statici vale ancora l'SVG inline.
-   - Dati in `<script id="dati" type="application/json">` (un solo JSON), letti con `JSON.parse`; ogni grafico in `<figure><div id="g-..." class="plot"></div></figure>` (430px, 360px su mobile). `figure` è un riquadro "vetro" scuro in entrambi i temi, quindi tutti i testi dei grafici sono chiari.
-   - Layout base unico per tutti: sfondo trasparente, font monospace 11px colore `#d9ccaf`, griglia `rgba(255,255,255,.1)`, niente `zeroline`, legenda orizzontale sotto (`y:-.18`), modebar orizzontale trasparente senza select/lasso/zoom +/- /autoscale, `displaylogo:false`, `responsive:true`, `Plotly.react` a ogni cambio filtro. Hover: `"x unified"` per serie temporali, `"closest"` per scatter; hoverlabel scuro (`#0a1018`, bordo chiaro).
+   - Dati in `<script id="dati" type="application/json">` (un solo JSON), letti con `JSON.parse`; ogni grafico in `<figure><div id="g-..." class="plot"></div></figure>` (430px, 360px su mobile). `figure` segue il tema: riquadro chiaro (`--surface`) col tema chiaro, "vetro" scuro col tema scuro.
+   - Layout base unico per tutti: sfondo trasparente, font monospace 11px, colori letti dalle variabili del tema in una funzione `colori()` chiamata a ogni disegno (testo `--ink-2`, griglia `rgba(0,0,0,.08)` in chiaro e `rgba(255,255,255,.1)` in scuro, palette più scura in chiaro e più chiara in scuro); il pulsante Tema ridisegna i grafici, niente `zeroline`, legenda orizzontale sotto (`y:-.18`), modebar orizzontale trasparente senza select/lasso/zoom +/- /autoscale, `displaylogo:false`, `responsive:true`, `Plotly.react` a ogni cambio filtro. Hover: `"x unified"` per serie temporali, `"closest"` per scatter; hoverlabel con `--surface` e testo `--ink`.
    - Colori: palette della cover (primo = caldo `--c2`, secondo = freddo `--c1`), poi pastello distinguibili (`#9db4f0 #c9a8e8 #a6d96a #f4a6c0 #d9d9d9`). Linee 2.2-2.6px, marker 6-8px, nuvole di punti con `opacity:.5`. Unità sugli assi (`ticksuffix`), formato italiano (virgola decimale).
    - Dopo il grafico una riga che spiega come leggerlo e come interagire. Con nessun dato: annotazione "Nessun dato con questi filtri".
 6. **Controlla nel browser** (Playwright o Chrome, poi Read sugli screenshot), **a 1280px e a 390px**:
-   - desktop: titolo su una riga da bordo a bordo, intro chiusa dalla riga da 3px;
+   - desktop: titolo su una riga larga circa l'80% (max 150px), intro chiusa dalla riga da 3px;
    - telefono: titolo a capo leggibile (non sotto i 44px), la pagina non scorre di lato (`document.documentElement.scrollWidth` = larghezza; occhio a link lunghi e tabelle);
    - indice e barra che seguono lo scroll, tema chiaro e scuro, console senza errori, nessun `{{` rimasto (`grep "{{" file.html`).
 7. **Salva** in `docs/index.html` del progetto (crea `docs/` se manca), pubblicabile con GitHub Pages (Settings → Pages → branch `main`, cartella `/docs`). Se l'utente indica un altro percorso, usa quello. **Subito dopo** richiama `crea-scheda-progetto` per scrivere in `docs/progetto.json` il campo `live` (`/<repo>/`).

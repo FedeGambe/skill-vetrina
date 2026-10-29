@@ -63,7 +63,7 @@ node livelli_bbox_intero.js docs/img/cover_soggetto.svg  # idem, ma misura il di
 python componi.py docs/img                               # rigenera cover_orizzontale.svg e cover_verticale.svg dai due livelli
 ```
 
-`livelli.py banner.svg …` scrive invece `banner_sfondo.svg` e `banner_soggetto.svg` (banner delle dashboard). Regole per disegnarli: `copertine/SKILL.md`.
+`livelli.py banner.svg …` scrive invece `banner_sfondo.svg` e `banner_soggetto.svg`. Regole per disegnarli: `copertine/SKILL.md`.
 
 ## Sito dei progetti
 
