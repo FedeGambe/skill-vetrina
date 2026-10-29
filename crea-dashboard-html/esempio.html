@@ -83,7 +83,26 @@ fieldset{border:0; margin:0; padding:0; min-width:0}
 .sezione > legend{display:flex; align-items:center; gap:12px; font-size:1.05rem; padding:0; margin-bottom:20px; float:left; width:100%}
 .sezione > legend + *{clear:both}
 .sezione > legend .passo{display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%;
-  background:var(--surface-2); color:var(--ink-2); font:600 .8rem var(--f-body); letter-spacing:0}
+  background:var(--surface-2); color:var(--ink-2); font:600 .8rem var(--f-body); letter-spacing:0; transition:background .2s, color .2s}
+.sezione{scroll-margin-top:calc(var(--barra) + 76px); transition:border-color .2s}
+.sezione.attiva{border-color:color-mix(in srgb, var(--teal) 45%, var(--line))}
+.sezione.attiva > legend .passo{background:var(--teal); color:#fff}
+
+/* Barra dei passi: fissa sotto la barra in alto mentre si compila; si colora man mano */
+.passi{position:sticky; top:calc(var(--barra) + 8px); z-index:5; background:color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid var(--line); border-radius:999px; padding:6px; box-shadow:var(--ombra)}
+.passi ol{display:flex; align-items:center; margin:0; padding:0; list-style:none}
+.passi li{display:flex; align-items:center; flex:1 1 auto; min-width:0}
+.passi li + li::before{content:""; flex:1 1 16px; min-width:8px; height:2px; margin:0 6px; border-radius:2px; background:var(--line); transition:background .25s}
+.passi li.fatto + li::before,.passi li.attivo::before{background:var(--teal)}
+.passi a{display:flex; align-items:center; gap:8px; min-height:36px; padding:0 12px 0 4px; border-radius:999px; color:var(--ink-3); text-decoration:none; font-size:.86rem; font-weight:600; white-space:nowrap; transition:background .2s, color .2s}
+.passi a:hover{color:var(--ink)}
+.passi .passo{display:inline-grid; place-items:center; flex:none; width:28px; height:28px; border-radius:50%; background:var(--surface-2); color:var(--ink-2); font-size:.8rem; transition:background .2s, color .2s}
+.passi .fatto .passo{background:var(--teal-soft); color:var(--teal-ink)}
+.passi .attivo a{background:var(--teal-soft); color:var(--teal-ink)}
+.passi .attivo .passo{background:var(--teal); color:#fff}
+.passi .nome{overflow:hidden; text-overflow:ellipsis}
+@media (max-width:700px){ .passi li:not(.attivo) .nome{display:none} .passi a{padding-right:4px} .passi .attivo a{padding-right:12px} }
 .campi{display:grid; grid-template-columns:minmax(0,1fr); gap:20px 22px}
 @media (min-width:600px){ .campi{grid-template-columns:repeat(2,minmax(0,1fr))} }
 @media (min-width:980px){ .campi{grid-template-columns:repeat(3,minmax(0,1fr))} }
@@ -144,14 +163,16 @@ input[type=range]{flex:1; accent-color:var(--teal); min-height:44px; margin:0}
 /* Risultato: KPI e grafico affiancati su desktop */
 .esiti{display:grid; gap:20px; margin-top:20px}
 @media (min-width:980px){ .esiti{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr); align-items:start} }
-.risultato{text-align:center}
+.risultato{text-align:center; transition:background .4s, border-color .4s}
+.risultato.bev{background:linear-gradient(180deg, var(--teal-soft), var(--surface) 75%); border-color:color-mix(in srgb, var(--teal) 35%, var(--line))}
+.risultato.altro{background:linear-gradient(180deg, var(--arancio-soft), var(--surface) 75%); border-color:color-mix(in srgb, var(--arancio) 35%, var(--line))}
 .risultato h2{text-align:left}
-.indicatore{display:block; width:100%; max-width:250px; margin:8px auto 0}
+.indicatore{display:block; width:100%; max-width:320px; margin:12px auto 0}
 .indicatore .traccia{stroke:var(--track)}
-.indicatore .valore{stroke:var(--teal); transition:stroke-dasharray .35s cubic-bezier(.2,.7,.2,1)}
+.indicatore .valore{stroke:var(--teal); transition:stroke-dasharray .7s cubic-bezier(.2,.7,.2,1), stroke .3s}
 .indicatore .valore.basso{stroke:var(--arancio)}
 .indicatore .media{stroke:var(--ink); stroke-width:2.5}
-.indicatore .grande{fill:var(--ink); font:600 38px var(--f-body); letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+.indicatore .grande{fill:var(--ink); font:750 46px var(--f-body); letter-spacing:-.02em; font-variant-numeric:tabular-nums}
 .indicatore .estremi{fill:var(--ink-3); font:12px var(--f-body)}
 .delta{font-size:.85rem; font-weight:600; font-variant-numeric:tabular-nums; min-height:1.4em; margin:2px 0 10px; color:var(--ink-3)}
 .delta.su{color:var(--teal-ink)} .delta.giu{color:var(--arancio-ink)}
@@ -167,19 +188,26 @@ input[type=range]{flex:1; accent-color:var(--teal); min-height:44px; margin:0}
 /* Cascata */
 .sottotitolo{font-size:.86rem; color:var(--ink-3); margin:6px 0 14px}
 .cascata{display:grid; gap:4px}
-.riga{display:grid; grid-template-columns:minmax(0,10em) minmax(0,1fr) 4.2em; gap:10px; align-items:center; min-height:31px}
+.riga{display:grid; grid-template-columns:minmax(0,10em) minmax(0,1fr) 4.2em; gap:10px; align-items:center; min-height:34px; padding:2px 8px; margin:0 -8px; border-radius:8px; transition:opacity .2s, background .2s}
+.cascata:hover .riga:not(:hover){opacity:.45}
+.cascata .riga:hover{background:var(--surface-2)}
 .riga .nome{font-size:.86rem; line-height:1.2; min-width:0}
 .riga .nome b{display:block; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .riga .nome span{display:block; font-size:.76rem; color:var(--ink-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.riga .pista{position:relative; height:18px}
+.riga .pista{position:relative; height:20px}
 .riga .pista::before{content:""; position:absolute; inset:50% 0 auto; height:1px; background:var(--line)}
-.riga .seg{position:absolute; top:0; bottom:0; border-radius:3px; min-width:2px; transition:left .3s, width .3s}
-.riga .seg.su{background:var(--teal)} .riga .seg.giu{background:var(--arancio)}
+.riga .seg{position:absolute; top:0; bottom:0; border-radius:6px; min-width:3px; transition:left .3s, width .3s}
+.riga .seg.su{background:linear-gradient(90deg, color-mix(in srgb, var(--teal) 55%, transparent), var(--teal)); transform-origin:left}
+.riga .seg.giu{background:linear-gradient(270deg, color-mix(in srgb, var(--arancio) 55%, transparent), var(--arancio)); transform-origin:right}
+/* all'apertura dei risultati le barre crescono una dopo l'altra */
+.cascata.entra .seg{animation:cresce .55s cubic-bezier(.2,.7,.2,1) both; animation-delay:calc(var(--i) * 70ms)}
+.cascata.entra .val{animation:entra .4s both; animation-delay:calc(var(--i) * 70ms + .2s)}
+@keyframes cresce{from{transform:scaleX(0)}}
 .riga .segno{position:absolute; top:-3px; bottom:-3px; width:3px; margin-left:-1.5px; border-radius:2px; background:var(--ink-3)}
 .riga .val{font-size:.8rem; font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap}
 .riga .val.su{color:var(--teal-ink)} .riga .val.giu{color:var(--arancio-ink)}
 .riga.estremo{border-top:1px dashed var(--line); padding-top:4px}
-.riga.estremo:first-child{border-top:0; border-bottom:1px dashed var(--line); padding:0 0 4px}
+.riga.estremo:first-child{border-top:0; border-bottom:1px dashed var(--line); padding:0 8px 4px}
 .riga.estremo .val{font-weight:600; color:var(--ink)}
 .riga.finale .segno{background:var(--ink); width:4px; margin-left:-2px}
 .asse-x{display:grid; grid-template-columns:minmax(0,10em) minmax(0,1fr) 4.2em; gap:10px; margin-top:2px}
@@ -236,6 +264,7 @@ footer .firma{margin-top:14px}
   </div>
 
   <form id="profilo" novalidate>
+    <nav class="passi" aria-label="Passi del profilo"><ol id="passi"></ol></nav>
     <fieldset class="scheda sezione">
       <legend><span class="passo">1</span>Chi è</legend>
       <div class="campi">
@@ -614,11 +643,25 @@ footer .firma{margin-top:14px}
     return (p > precedente ? "▲ " : "▼ ") + punti.format((p - precedente) * 100).replace(/^[+−-]/, "");
   }
 
+  // Il numero conta fino al valore; all'apertura dei risultati parte da zero
+  var riduci = matchMedia("(prefers-reduced-motion: reduce)").matches, daZero = false, conta = 0;
+  function contaFino(p) {
+    var da = daZero ? 0 : precedente === null ? p : precedente, t0 = performance.now();
+    daZero = false; cancelAnimationFrame(conta);
+    if (riduci || da === p) { $("percentuale").textContent = pct.format(p); return; }
+    (function passo(t) {
+      var k = Math.min(1, (t - t0) / 800), e = 1 - Math.pow(1 - k, 3);
+      $("percentuale").textContent = pct.format(da + (p - da) * e);
+      if (k < 1) conta = requestAnimationFrame(passo);
+    })(t0);
+  }
+
   function disegnaIndicatore(p) {
     $("arco").setAttribute("stroke-dasharray", (p * 100).toFixed(2) + " 100");
     $("arco").classList.toggle("basso", p < I.soglia);
-    $("percentuale").textContent = pct.format(p);
+    contaFino(p);
     var bev = p >= I.soglia;
+    $("risultato").classList.toggle("bev", bev); $("risultato").classList.toggle("altro", !bev);
     $("verdetto").className = "verdetto " + (bev ? "bev" : "altro");
     $("verdetto").innerHTML = ICONE[bev ? "bev" : "altro"] + (bev ? "Più probabile un BEV" : "Più probabile un altro veicolo");
     var t = testoDelta(p);
@@ -645,17 +688,17 @@ footer .firma{margin-top:14px}
     var hi = Math.min(1, Math.ceil((Math.max.apply(null, tutti) + 0.03) * 10) / 10);
     var X = function (p) { return ((p - lo) / (hi - lo) * 100).toFixed(2) + "%"; };
 
-    var html = '<div class="riga estremo" role="listitem"><span class="nome"><b>Cliente medio</b><span>riferimento del modello</span></span>' +
+    var html = '<div class="riga estremo" role="listitem" style="--i:0"><span class="nome"><b>Cliente medio</b><span>riferimento del modello</span></span>' +
       '<span class="pista"><span class="segno" style="left:' + X(p0) + '"></span></span><span class="val">' + pct.format(p0) + "</span></div>";
-    righe.forEach(function (x) {
+    righe.forEach(function (x, i) {
       var su = x.a >= x.da, pp = Math.abs(x.a - x.da) * 100;
-      html += '<div class="riga" role="listitem"><span class="nome"><b>' + x.nome + "</b><span>" + x.dettaglio + "</span></span>" +
+      html += '<div class="riga" role="listitem" style="--i:' + (i + 1) + '"><span class="nome"><b>' + x.nome + "</b><span>" + x.dettaglio + "</span></span>" +
         '<span class="pista"><span class="seg ' + (su ? "su" : "giu") + '" style="left:' + X(Math.min(x.da, x.a)) +
         ";width:calc(" + X(Math.max(x.da, x.a)) + " - " + X(Math.min(x.da, x.a)) + ')"></span></span>' +
         '<span class="val ' + (su ? "su" : "giu") + '">' + (su ? "▲ " : "▼ ") + punti.format(pp).replace(/^\+/, "") +
         '<span class="solo-lettori"> punti ' + (su ? "verso BEV" : "verso altro veicolo") + "</span></span></div>";
     });
-    html += '<div class="riga estremo finale" role="listitem"><span class="nome"><b>Questo profilo</b><span>stima finale</span></span>' +
+    html += '<div class="riga estremo finale" role="listitem" style="--i:' + (righe.length + 1) + '"><span class="nome"><b>Questo profilo</b><span>stima finale</span></span>' +
       '<span class="pista"><span class="segno" style="left:' + X(r.probabilita) + '"></span></span><span class="val">' + pct.format(r.probabilita) + "</span></div>";
     $("cascata").innerHTML = html;
 
@@ -700,7 +743,29 @@ footer .firma{margin-top:14px}
   function mostraFase(fase, scorri) {
     pagina.dataset.fase = fase;
     if (scorri) $(fase === "risultati" ? "riepilogo" : "profilo").scrollIntoView({ block: "start" });
+    if (fase === "input") passoAttivo();
   }
+
+  // Barra dei passi: una voce per .sezione, attiva quella sotto la barra, "fatto" quelle già passate
+  var sezioni = [].slice.call(document.querySelectorAll("#profilo .sezione"));
+  $("passi").innerHTML = sezioni.map(function (s, i) {
+    s.id = s.id || "passo-" + (i + 1);
+    return '<li><a href="#' + s.id + '"><span class="passo">' + (i + 1) + '</span><span class="nome">' +
+      s.querySelector("legend").lastChild.textContent.trim() + "</span></a></li>";
+  }).join("");
+  var voci = [].slice.call($("passi").children);
+  function passoAttivo() {
+    if (pagina.dataset.fase !== "input") return;
+    var k = 0, fondo = innerHeight + scrollY >= document.documentElement.scrollHeight - 4;
+    sezioni.forEach(function (s, i) { if (s.getBoundingClientRect().top < innerHeight * 0.4) k = i; });
+    if (fondo) k = sezioni.length - 1;
+    voci.forEach(function (li, i) {
+      li.classList.toggle("fatto", i < k); li.classList.toggle("attivo", i === k);
+      if (i === k) li.firstChild.setAttribute("aria-current", "step"); else li.firstChild.removeAttribute("aria-current");
+    });
+    sezioni.forEach(function (s, i) { s.classList.toggle("attiva", i === k); });
+  }
+  addEventListener("scroll", passoAttivo, { passive: true }); addEventListener("resize", passoAttivo); passoAttivo();
   function mostraRisultati(scorri) {
     var errati = mostraErrori();
     if (errati.length) { mostraFase("input"); $(errati[0]).focus(); return; }
@@ -708,6 +773,9 @@ footer .firma{margin-top:14px}
       return "<li>" + NOMI[id] + " <b>" + valoreLeggibile(id) + "</b></li>";
     }).join("");
     mostraFase("risultati", scorri);
+    $("arco").setAttribute("stroke-dasharray", "0 100"); getComputedStyle($("arco")).strokeDasharray;  // l'arco parte da zero
+    daZero = true;
+    $("cascata").classList.add("entra"); setTimeout(function () { $("cascata").classList.remove("entra"); }, 1400);
     aggiorna();
   }
 
