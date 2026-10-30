@@ -9,7 +9,7 @@ Un solo file HTML, nessun build, nessuna dipendenza, nessun font esterno. Stile 
 
 ## Struttura (non cambiarla)
 
-1. **Barra fissa**: "← Progetti" (logo, già nel template), 0-2 link, pulsante Tema. Sempre piena, semitrasparente con sfocatura e riga sottile sotto.
+1. **Barra fissa, uguale a quella delle pagine** (`crea-pagina-html`) e del sito: a sinistra il nome della dashboard (`.dove .progetto`), a destra "← Progetti" (logo, già nel template), 0-2 link, pulsante Tema; pillole monospace maiuscole con bordo `--ink`. Trasparente in cima, sfocata con riga sottile quando scorri (classe `compatta`, JS già nel template). Non restilizzarla: è l'unico pezzo identico fra pagine e dashboard.
 2. **Testata** (`.pagina > header`, solo testo, niente banner né immagini): `.occhiello` (tipo di dashboard · modello o fonte, maiuscoletto grigio), `h1` grande in grassetto con 1-2 parole chiave in `<em>` (colore accento, non corsivo), `.intro` di 1-2 frasi, pillole `.dati-modello` (metriche o provenienza dei dati).
 3. **Barra azioni** (facoltativa): preset `.pulsante[data-esempio]`, Ripristina, Copia link.
 4. **Fase input** (`.pagina[data-fase="input"]`): `<form id="profilo">` a tutta larghezza, una `.scheda.sezione` per gruppo (legend con `.passo` numerato; campi su 3 colonne da desktop, `.largo` per una riga intera), in cima la barra dei passi `.passi` (si costruisce da sola dalle `.sezione`: fissa sotto la barra, evidenzia la sezione in vista e colora quelle già passate), in fondo `.invio` con il pulsante `.primario` "Mostra i risultati" (submit).

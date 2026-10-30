@@ -50,6 +50,7 @@ h1 ≈ 42px > h2 27 > h3 21 > testo 16 > note 13 (il template la rispetta già).
 
 - Lingua della pagina = lingua dell'utente, salvo diversa richiesta.
 - Il file deve funzionare sia da disco (`file://`) sia su GitHub Pages: immagini con percorsi **relativi** dentro `docs/` (`img/...`, mai `/percorso` assoluto né `C:/...`), niente font esterni; unica CDN ammessa Plotly.
+- La barra in alto è la stessa in pagine, dashboard, simulatori e sito (stesso CSS, pillole monospace): non restilizzarla. Tema chiaro di default ovunque (`localStorage.theme||"light"`).
 - Non cambiare JS e struttura della barra/indice: dipendono da ids (`barra`, `copertina`, `indice`, `apri-indice`, `tema`, `barra-capitolo`) e classi (`capitolo`, `data-titolo`, `data-parte`).
 - Non toccare il blocco CSS `INTRO` e `adattaTitolo()`: sono uguali in tutte le pagine dei progetti. Se serve un componente nuovo, aggiungilo al CSS del file in stile coerente (variabili `--*`, niente colori fissi).
 - Esempio completo di riferimento: `esempio.html` (Target Maturity ETF Planner).
